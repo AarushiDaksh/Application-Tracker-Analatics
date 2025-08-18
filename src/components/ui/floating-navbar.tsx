@@ -5,6 +5,7 @@ import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { useRouter } from "next/navigation";
 import { useAppSelector } from "@/store/hooks";
+import { Home, LayoutDashboard, LogIn } from "lucide-react";
 
 interface FloatingNavProps {
   className?: string;
@@ -55,33 +56,60 @@ export const FloatingNav: React.FC<FloatingNavProps> = ({
         )}
 
         {/* Right side */}
-        <div className="flex items-center gap-2">
-          {/* Greeting (when logged in) */}
-          {user && (
-            <span className="text-sm text-black/70 dark:text-white/80 mr-1">
-              Hi, {user.name.split(" ")[0]}
-            </span>
-          )}
+<div className="flex items-center gap-1 sm:gap-2">
+  {/* Greeting (md+ only) */}
+  {user && (
+    <span
+      className="hidden md:inline text-sm text-black/70 dark:text-white/80 mr-1 max-w-[10rem] truncate"
+      title={user.name}
+    >
+      Hi, {(user.name || "").split(" ")[0]}
+    </span>
+  )}
 
-          {showThemeToggle && <ThemeToggle />}
+  {showThemeToggle && <ThemeToggle />}
 
-          {/* If not logged in -> Login; If logged in -> ATS (to /dashboard) */}
-          {!user ? (
-            <button
-              onClick={() => router.push("/sign-in")}
-              className="px-3 py-1 rounded-full border border-neutral-300 dark:border-white/20 text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/10 transition"
-            >
-              Login
-            </button>
-          ) : (
-            <button
-              onClick={() => router.push("/dashboard")}
-              className="px-3 py-1 rounded-full bg-black text-white dark:bg-white dark:text-black border border-transparent hover:opacity-90 transition"
-            >
-              ATS
-            </button>
-          )}
-        </div>
+  {/* Auth / Nav */}
+  {!user ? (
+    <>
+      {/* Mobile: icon only */}
+      <button
+        onClick={() => router.push("/sign-in")}
+        aria-label="Login"
+        className="md:hidden inline-flex items-center justify-center h-10 w-10 rounded-full border border-neutral-300 dark:border-white/20 text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/10 transition active:scale-[0.98]"
+      >
+        <LogIn className="h-5 w-5" />
+      </button>
+
+      {/* md+: text button */}
+      <button
+        onClick={() => router.push("/sign-in")}
+        className="hidden md:inline-flex px-3 py-1 rounded-full border border-neutral-300 dark:border-white/20 text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/10 transition"
+      >
+        Login
+      </button>
+    </>
+  ) : (
+    <>
+      {/* Mobile: icon only */}
+      <button
+        onClick={() => router.push("/dashboard")}
+        aria-label="Open Dashboard"
+        className="md:hidden inline-flex items-center justify-center h-10 w-10 rounded-full bg-black text-white dark:bg-white dark:text-black border border-transparent hover:opacity-90 transition active:scale-[0.98]"
+      >
+         <LayoutDashboard className="h-5 w-5" />
+      </button>
+
+      {/* md+: text button */}
+      <button
+        onClick={() => router.push("/dashboard")}
+        className="hidden md:inline-flex px-3 py-1 rounded-full bg-black text-white dark:bg-white dark:text-black border border-transparent hover:opacity-90 transition"
+      >
+        ATS
+      </button>
+    </>
+  )}
+</div>
       </motion.div>
     </AnimatePresence>
   );

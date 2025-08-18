@@ -3,7 +3,8 @@ import { NextResponse } from "next/server";
 import { dbConnect } from "@/utils/db";
 import Candidate from "@/models/Candidates";
 import Job from "@/models/job";
-import Application from "@/models/Application";
+import { Application } from "@/models/Application";
+
 
 export const runtime = "nodejs";
 

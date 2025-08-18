@@ -5,7 +5,7 @@ const CandidateSchema = new Schema({
   name: String,
   email: String,
   source: { type: String, default: "LinkedIn" },
-  experience: Number, // years
+  experience: Number, 
   skills: [String],
   avatar: String,
 }, { timestamps: true });

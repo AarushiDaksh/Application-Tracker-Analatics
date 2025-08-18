@@ -1,5 +1,5 @@
 // hooks/useKanbanActions.ts
-import { KanbanStage } from "@/hooks/useApplications";
+import { KanbanStage } from "@/types/kanban";
 
 export function createOnMove(apps: any[], mutate: any) {
   return async function onMove(id: string, toStage: KanbanStage) {
