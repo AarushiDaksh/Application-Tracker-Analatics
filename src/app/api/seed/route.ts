@@ -1,4 +1,4 @@
-// src/app/api/seed/route.ts
+
 import { NextResponse } from "next/server";
 import { dbConnect } from "@/utils/db";
 import Candidate from "@/models/Candidates";

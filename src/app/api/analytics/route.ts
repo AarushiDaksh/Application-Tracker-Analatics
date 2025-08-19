@@ -1,4 +1,4 @@
-// src/app/api/analytics/route.ts
+
 import { NextResponse } from "next/server";
 import { dbConnect } from "@/utils/db";
 import { Application } from "@/models/Application";

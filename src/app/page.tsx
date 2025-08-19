@@ -1,6 +1,5 @@
 import { Hero } from "@/components/HeroSection/Hero";
 import { HeaderH } from "@/components/Header";
-import ShootingStars from "@/components/Background/ShootingStars";
 import Image from "next/image";
 
 export default async function Home() {

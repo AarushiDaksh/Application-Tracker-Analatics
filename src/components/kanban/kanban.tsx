@@ -32,7 +32,7 @@ type KanbanProps = {
 };
 
 export default function Kanban({ apps, onMove, onAdd, onDelete }: KanbanProps) {
-  // ===== Filters / search =====
+  //Filters serach
   const uniqueRoles = useMemo(
     () => Array.from(new Set(apps.map((a) => a.job?.title).filter(Boolean))) as string[],
     [apps]
@@ -85,7 +85,7 @@ const filteredApps = useMemo(() => {
     await onMove(draggableId, toStage);
   }
 
-  // ===== Add modal state =====
+  // states
   const [showAdd, setShowAdd] = useState(false);
   const [addStage, setAddStage] = useState<KanbanStage>("Applied");
   const [candidateName, setCandidateName] = useState("");
@@ -131,7 +131,7 @@ const filteredApps = useMemo(() => {
 
   return (
     <>
-      {/* ===== Toolbar (sticky on mobile) ===== */}
+     
       <div className="sticky top-[64px] z-10 mb-3 bg-white/80 dark:bg-black/40 backdrop-blur rounded-xl p-2 md:p-0">
         <div className="flex flex-col md:flex-row gap-2 md:items-center">
           <div className="flex gap-2 w-full md:w-auto">
@@ -168,9 +168,9 @@ const filteredApps = useMemo(() => {
       </div>
 
       <DragDropContext onDragEnd={onDragEnd}>
-        {/* Mobile: horizontal scroll; md+: grid */}
+       
         <div className="md:grid md:gap-4 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 -mx-3 px-3">
-          {/* Mobile: vertical scroll */}
+       
 <div className="md:hidden flex flex-col gap-3 overflow-y-auto no-scrollbar max-h-[calc(100vh-100px)] pb-3 snap-y snap-mandatory">
   {STAGES.map((stage) => {
     const theme = STAGE_STYLE[stage];
@@ -201,7 +201,7 @@ const filteredApps = useMemo(() => {
 </div>
 
 
-          {/* md+ grid */}
+      
           <div className="hidden md:contents">
             {STAGES.map((stage) => {
               const theme = STAGE_STYLE[stage];
@@ -232,7 +232,6 @@ const filteredApps = useMemo(() => {
         </div>
       </DragDropContext>
 
-      {/* ===== Add Modal ===== */}
       {showAdd && (
         <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/40" role="dialog" aria-modal="true">
           <div className="w-full max-w-md rounded-2xl border border-black/10 dark:border-white/10 bg-white dark:bg-zinc-900 p-4 shadow-xl">
@@ -280,7 +279,7 @@ const filteredApps = useMemo(() => {
   );
 }
 
-/* ---------- Small components ---------- */
+
 function ColumnHeader({
   stage, theme, count,
 }: { stage: KanbanStage; theme: { ring: string; pill: string; bg: string }; count: number }) {
@@ -339,7 +338,7 @@ function Cards({
                   </div>
                 </div>
 
-                {/* Meta */}
+             
                 <div className="mt-2 flex flex-wrap items-center gap-2">
                   {Number.isFinite(Number(exp)) && (
                     <span className="text-[10px] px-1.5 py-0.5 rounded border border-black/10 dark:border-white/10">
@@ -353,7 +352,7 @@ function Cards({
                   )}
                 </div>
 
-                {/* Quick actions */}
+    
                 <div className="mt-2 flex flex-wrap items-center gap-2">
                   <button
                     onClick={() => onMove(a._id, "Interview")}

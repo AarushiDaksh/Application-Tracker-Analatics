@@ -32,7 +32,7 @@ const ApplicationSchema = new Schema(
   { timestamps: true }
 );
 
-// Fix Next.js dev hot-reload model caching
+
 try {
   mongoose.deleteModel("Application");
 } catch {}

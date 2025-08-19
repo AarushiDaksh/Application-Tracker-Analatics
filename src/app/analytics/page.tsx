@@ -6,12 +6,11 @@ import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, Tooltip } from "recha
 export default function AnalyticsPage() {
   const { apps } = useApplications();
 
-  // 1. Count per stage
   const stageCounts = ["Applied", "Interview", "Offer", "Rejected"].map(s => ({
     stage: s, value: apps.filter(a => a.stage === s).length
   }));
 
-  // 2. Count per role
+
   const roleCounts = Object.values(
     apps.reduce((acc: any, a) => {
       acc[a.job.title] = (acc[a.job.title] || 0) + 1;
@@ -19,7 +18,7 @@ export default function AnalyticsPage() {
     }, {})
   );
 
-  // 3. Avg experience
+  // Avg experience
   const avgExp = apps.length ? 
     (apps.reduce((sum, a) => sum + (a.yearsOfExperience || 0), 0) / apps.length).toFixed(1) : 0;
 

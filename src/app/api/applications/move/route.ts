@@ -1,7 +1,7 @@
-// src/app/api/applications/move/route.ts
+
 import { NextResponse } from "next/server";
-import { dbConnect } from "@/utils/db";            // ✅ your correct path
-import { Application } from "@/models/Application"; // ✅ named import
+import { dbConnect } from "@/utils/db";            
+import { Application } from "@/models/Application"; 
 
 export const runtime = "nodejs";
 

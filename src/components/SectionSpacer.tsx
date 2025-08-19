@@ -25,7 +25,7 @@ const SectionSpacer = ({
   only,
   children,
 }: SectionSpacerProps) => {
-  // Define spacing for both top and bottom separately
+  // spacing
   const spacingMapTop = {
     none: 'pt-0',
     xs: 'pt-4 md:pt-6',
@@ -53,7 +53,7 @@ const SectionSpacer = ({
     xl: 'py-24 md:py-32 lg:py-40',
   }
 
-  // Select the appropriate spacing class based on 'only' prop
+
   let spacingClass;
   if (only === 'top') {
     spacingClass = spacingMapTop[size];
