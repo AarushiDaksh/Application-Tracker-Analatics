@@ -1,7 +1,8 @@
-
 import { NextResponse } from "next/server";
 import { dbConnect } from "@/utils/db";
 import { Application } from "@/models/Application";
+
+export const runtime = "nodejs";
 
 export async function GET() {
   await dbConnect();
@@ -14,7 +15,7 @@ export async function POST(req: Request) {
     await dbConnect();
     const body = await req.json();
 
-    const {
+    let {
       stage,
       candidateName,
       jobTitle,
@@ -24,19 +25,43 @@ export async function POST(req: Request) {
       resumeLink,
     } = body || {};
 
+
+    stage = typeof stage === "string" ? stage.trim() : "";
+    candidateName = typeof candidateName === "string" ? candidateName.trim() : "";
+    jobTitle = typeof jobTitle === "string" ? jobTitle.trim() : "";
+    company = typeof company === "string" ? company.trim() : undefined;
+
     if (!stage || !candidateName || !jobTitle) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
+
+ 
+    const safeSkills: string[] = Array.isArray(skills)
+      ? skills
+          .map((s) => (typeof s === "string" ? s.trim() : ""))
+          .filter(Boolean)
+      : [];
+
+
+    let yoe: number | undefined = undefined;
+    if (yearsOfExperience !== undefined && yearsOfExperience !== null && yearsOfExperience !== "") {
+      const n = Number(yearsOfExperience);
+      if (!Number.isFinite(n) || n < 0) {
+        return NextResponse.json({ error: "yearsOfExperience must be a non-negative number" }, { status: 400 });
+      }
+      yoe = n;
+    }
+
+   
+    resumeLink = typeof resumeLink === "string" ? resumeLink.trim() : undefined;
+    if (resumeLink === "") resumeLink = undefined;
 
     const doc = await Application.create({
       stage,
       candidate: { name: candidateName },
       job: { title: jobTitle, company },
-      skills: Array.isArray(skills) ? skills : [],
-      yearsOfExperience:
-        yearsOfExperience === undefined || yearsOfExperience === null
-          ? undefined
-          : Number(yearsOfExperience),
+      skills: safeSkills,
+      yearsOfExperience: yoe,
       resumeLink,
     });
 

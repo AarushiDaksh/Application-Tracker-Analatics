@@ -1,29 +1,33 @@
-
 import { NextResponse } from "next/server";
 import { dbConnect } from "@/utils/db";
 import { Application } from "@/models/Application";
 
 export const runtime = "nodejs";
 
-export async function PATCH(req: Request, ctx: { params: Promise<{ id: string }> }) {
-  await dbConnect();
-
-  const { id } = await ctx.params; 
-  const { stage } = await req.json();
-
-  const app = await Application.findByIdAndUpdate(
-    id,
-    { stage },
-    { new: true }
-  );
-  if (!app) return NextResponse.json({ error: "Not found" }, { status: 404 });
-
-  return NextResponse.json(app);
+function getIdFromUrl(req: Request) {
+  const url = new URL(req.url);
+  const parts = url.pathname.split("/");
+  return parts[parts.length - 1]; // last segment is the id
 }
 
-export async function DELETE(req: Request, ctx: { params: Promise<{ id: string }> }) {
+export async function PATCH(req: Request) {
   await dbConnect();
-  const { id } = await ctx.params; 
+  const id = getIdFromUrl(req);
+
+  const body = await req.json().catch(() => ({}));
+  const update: any = {};
+  if (body.stage) update.stage = body.stage;
+  if (body.resumeLink !== undefined) update.resumeLink = body.resumeLink || undefined;
+
+  const doc = await Application.findByIdAndUpdate(id, update, { new: true });
+  if (!doc) return NextResponse.json({ error: "Not found" }, { status: 404 });
+  return NextResponse.json(doc);
+}
+
+export async function DELETE(req: Request) {
+  await dbConnect();
+  const id = getIdFromUrl(req);
+
   await Application.findByIdAndDelete(id);
   return NextResponse.json({ ok: true });
 }

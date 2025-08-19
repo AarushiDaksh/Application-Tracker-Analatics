@@ -8,6 +8,11 @@ export default {
   ],
   theme: {
     extend: {
+      colors: {
+ 
+        primary: "#4f46e5", 
+        secondary: "rgb(59, 130, 246)", // blue-500
+      },
     },
   },
   plugins: [],

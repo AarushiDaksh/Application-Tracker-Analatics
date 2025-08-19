@@ -11,3 +11,35 @@
   -ms-overflow-style: none;  /* IE/Edge */
   scrollbar-width: none;     /* Firefox */
 }
+/* disables animations, sticky, and blur while exporting */
+:root.exporting * { animation: none !important; transition: none !important; }
+:root.exporting .sticky { position: static !important; top: auto !important; }
+:root.exporting .backdrop-blur,
+:root.exporting .backdrop-blur-md { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+:root.exporting .bg-white\/60,
+:root.exporting .bg-white\/70,
+:root.exporting .bg-black\/40 { background-color: #ffffff !important; }
+
+/* Export overrides */
+:root.exporting, :root.exporting body {
+  color: #111 !important;
+  background: #fff !important;
+}
+
+/* Kill blur/transparency that can look muddy on capture */
+:root.exporting .backdrop-blur,
+:root.exporting .backdrop-blur-md { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+:root.exporting [class*="bg-white/"], 
+:root.exporting [class*="bg-black/"] { background-color: #ffffff !important; }
+
+/* Make “text-white” readable on white page */
+:root.exporting .text-white,
+:root.exporting .dark\:text-white { color: #111 !important; }
+
+/* Reduce “too faint” text */
+:root.exporting .opacity-50,
+:root.exporting .opacity-60,
+:root.exporting .opacity-70 { opacity: 0.9 !important; }
+
+/* Avoid sticky/positioned weirdness while rasterizing */
+:root.exporting .sticky { position: static !important; top: auto !important; }
