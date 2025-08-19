@@ -135,39 +135,66 @@ export default function DashboardPage() {
   return (
     <main className="min-h-screen bg-gradient-to-b from-white to-sky-50 dark:from-black dark:to-neutral-950">
       <div className="sticky top-0 z-20 border-b border-black/5 dark:border-white/10 backdrop-blur-md bg-white/60 dark:bg-black/40">
-        <div className="max-w-screen-xl mx-auto px-4 md:px-6 h-16 flex items-center justify-between">
-          <h1 className="text-lg md:text-xl font-semibold tracking-tight">
-            Welcome, <span className="font-bold">{firstName}</span>
-          </h1>
-          <div className="flex items-center gap-2">
-            <button
-              onClick={() => router.push("/")}
-              className="px-3 py-1.5 rounded-full border border-black/10 dark:border-white/15 hover:bg-black/5 dark:hover:bg-white/10 text-sm"
-            >
-              Back to Home
-            </button>
-            <button
-              onClick={onLogout}
-              className="px-3 py-1.5 rounded-full bg-sky-600 text-white dark:bg-white dark:text-black border border-transparent hover:opacity-90 text-sm"
-            >
-              Logout
-            </button>
-          </div>
-        </div>
-      </div>
+        <div className="mx-auto max-w-screen-xl px-4 sm:px-6 py-2 sm:py-0">
+    <div className="flex flex-wrap items-center justify-between gap-3 sm:h-16">
+      <h1 className="text-base sm:text-lg md:text-xl font-semibold tracking-tight">
+        Welcome, <span className="font-bold">{firstName}</span>
+      </h1>
 
-      <div className="max-w-screen-xl mx-auto px-4 md:px-6 py-8 space-y-8">
-        <header className="flex items-end justify-between">
-          <div>
-            <h2 className="text-2xl md:text-3xl font-bold tracking-tight">ATS Dashboard</h2>
-            <p className="text-sm text-black/60 dark:text-white/60">
-              Drag candidates across stages. Auto-saves to your database.
-            </p>
-          </div>
-          <div className="text-sm opacity-70">
-            {isLoading ? "Loading…" : `${apps.length} applications`}
-          </div>
-        </header>
+      <div className="flex items-center gap-2 w-full xs:w-auto sm:w-auto justify-between sm:justify-end">
+        <button
+          onClick={() => router.push("/")}
+          className="px-2 py-1 sm:px-3 sm:py-1.5 rounded-full border border-black/10 dark:border-white/15 hover:bg-black/5 dark:hover:bg-white/10 text-xs sm:text-sm"
+        >
+          Back to Home
+        </button>
+        <button
+          onClick={onLogout}
+          className="px-2 py-1 sm:px-3 sm:py-1.5 rounded-full bg-sky-600 text-white dark:bg-white dark:text-black border border-transparent hover:opacity-90 text-xs sm:text-sm"
+        >
+          Logout
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{/* Page header */}
+<div className="mx-auto max-w-screen-xl px-4 sm:px-6 py-4 sm:py-8 space-y-4 sm:space-y-8">
+  <header className="grid gap-2 sm:gap-3 sm:flex sm:items-end sm:justify-between">
+    <div>
+      <h2 className="text-xl sm:text-2xl md:text-3xl font-bold tracking-tight">
+        ATS Dashboard
+      </h2>
+      <p className="text-xs sm:text-sm text-black/60 dark:text-white/60">
+        Drag candidates across stages. Auto-saves to your database.
+      </p>
+    </div>
+
+  
+    {/* Applications stat pill */}
+<div
+  className="shrink-0 inline-flex items-center gap-2 rounded-full border border-black/10 dark:border-white/15 bg-white/70 dark:bg-white/5 backdrop-blur px-3 py-1.5 text-xs sm:text-sm"
+  aria-live="polite"
+>
+  {isLoading ? (
+    <>
+      <span className="inline-block h-3.5 w-3.5 rounded-full border-2 border-black/20 dark:border-white/20 border-t-transparent dark:border-t-transparent animate-spin" />
+      <span className="opacity-70">Syncing applications…</span>
+    </>
+  ) : (
+    <>
+      {/* tiny dot/icon */}
+      <span className="inline-block h-2.5 w-2.5 rounded-full bg-emerald-500 ring-2 ring-emerald-500/20" />
+      <span className="font-semibold tabular-nums">{apps.length}</span>
+      <span className="opacity-70">
+        {apps.length === 1 ? "application" : ""}
+      </span>
+    </>
+  )}
+</div>
+
+  </header>
 
         <section aria-label="Analytics" className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
