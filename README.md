@@ -5,6 +5,7 @@ Built to streamline job application management with drag-and-drop stages, real-t
 
 ---
 ## fully functional Ui for all screens listed are screenshorts for web and mobile
+<img width="875" height="449" alt="image" src="https://github.com/user-attachments/assets/39eb38d3-f0de-4fec-a2c4-f9409f3644bd" />
 
 <p align="center">
   <img width="400" alt="image" src="https://github.com/user-attachments/assets/eb4f0f7d-5ef6-4f8d-b5e2-e56041c48df1" />
