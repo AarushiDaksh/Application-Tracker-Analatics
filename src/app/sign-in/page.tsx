@@ -50,18 +50,11 @@ export default function SignInPage() {
       >
       
         <div className="flex items-center gap-3 justify-center">
-          <div className="size-9 rounded-full overflow-hidden ring-1 ring-black/10 dark:ring-white/10">
-            <Image
-              src="/Images/eraah.jpg"
-              alt="EraahAnalytics"
-              width={28}
-              height={28}
-              className="w-full h-full object-cover"
-              priority
-            />
-          </div>
-          <div className="text-lg font-semibold tracking-tight">
-            <span className="text-black dark:text-white">EraahAnalytics</span>
+            <div className="flex items-center gap-2 font-bold">
+            <div className="size-7 rounded-full overflow-hidden flex items-center justify-center bg-white/20">
+             <span className="text-black dark:text-white">A</span>
+            </div>
+            <span className="text-black dark:text-white">ATSAnalytics</span>
           </div>
         </div>
 

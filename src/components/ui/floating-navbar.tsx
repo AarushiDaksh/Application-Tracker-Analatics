@@ -42,16 +42,9 @@ export const FloatingNav: React.FC<FloatingNavProps> = ({
         {showLogo && (
           <div className="flex items-center gap-2 font-bold">
             <div className="size-7 rounded-full overflow-hidden flex items-center justify-center bg-white/20">
-              <Image
-                src="/Images/eraah.jpg"
-                alt="EraahAnalytics Logo"
-                width={28}
-                height={28}
-                className="w-full h-full object-cover"
-                priority
-              />
+             <span className="text-black dark:text-white">A</span>
             </div>
-            <span className="text-black dark:text-white">EraahAnalytics</span>
+            <span className="text-black dark:text-white">ATSAnalytics</span>
           </div>
         )}
 

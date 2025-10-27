@@ -12,12 +12,11 @@ export type App = {
   _id: string;
   stage: KanbanStage;
   candidate: { name: string };
-  job: { title: string; company?: string; description?: string };
+  job: { title: string; company?: string };
   skills?: string[];
   yearsOfExperience?: number;
   resumeLink?: string;
-  resumeText?: string;      
-  ai?: AIFields;            
-  createdAt?: string;
-  updatedAt?: string;
+  createdAt: string;  
+  updatedAt: string;
 };
+

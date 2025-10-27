@@ -35,6 +35,11 @@ export default function DashboardPage() {
 
   const { evaluate, isMutating } = useAI();
   const [insights, setInsights] = useState<string[]>([]);
+         const auth = useAppSelector(s => s.user.user);
+  const userKey = auth?.id || auth?.email || "anon";
+
+
+  if (isLoading) return <div className="p-6">Loading…</div>;
 
  async function generateInsights() {
   try {
@@ -272,12 +277,13 @@ export default function DashboardPage() {
 
           
         </section>
-        <Kanban
-          apps={apps}
-          onMove={moveApp}
-          onAdd={addApp}
-          onDelete={deleteApp}
-        />
+       <Kanban
+      key={userKey}            // 👈 forces a fresh component tree per user
+      apps={apps}
+      onAdd={addApp}
+      onMove={moveApp}
+      onDelete={deleteApp}
+    />
       </div>
     </main>
   );

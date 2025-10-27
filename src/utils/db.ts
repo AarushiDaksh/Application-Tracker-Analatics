@@ -1,28 +1,27 @@
-// utils/db.ts
+// src/utils/db.ts
 import mongoose from "mongoose";
 
-let isConnected = false;
+const MONGODB_URI = process.env.MONGODB_URI!;
+if (!MONGODB_URI) throw new Error("Missing MONGODB_URI");
 
-export const dbConnect = async () => {
-  if (isConnected) return;
+let cached = (global as any)._mongoose as { conn: typeof mongoose | null; promise: Promise<typeof mongoose> | null };
+if (!cached) cached = (global as any)._mongoose = { conn: null, promise: null };
 
-  const MONGO_URI = process.env.MONGODB_URI;
-
-  if (!MONGO_URI) {
-    throw new Error("MONGODB_URI is not defined in environment variables.");
+export async function dbConnect() {
+  if (cached.conn) return cached.conn;
+  if (!cached.promise) {
+    cached.promise = mongoose.connect(MONGODB_URI, {
+      serverSelectionTimeoutMS: 10000,  // fail fast
+      family: 4,                        // IPv4 – helps on some networks
+      // no need for useNewUrlParser/useUnifiedTopology on v6+
+    }).then(m => m);
   }
-
   try {
-    await mongoose.connect(MONGO_URI, {
-      dbName: "Eraah",
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    } as any);
-
-    isConnected = true;
-    console.log("MongoDB connected");
-  } catch (error) {
-    console.error("MongoDB connection error:", error);
+    cached.conn = await cached.promise;
+    return cached.conn;
+  } catch (e) {
+    cached.promise = null;
+    console.error("MongoDB connection error:", e);
     throw new Error("Error connecting to MongoDB");
   }
-};
+}

@@ -22,20 +22,16 @@ export default async function Home() {
           
           <div className="flex items-center gap-2 font-bold mb-4 md:mb-0 text-black dark:text-white">
             <div className="size-6 rounded-full overflow-hidden flex items-center justify-center bg-white/20">
-              <Image
-                src="/Images/eraah.jpg" 
-                alt="EraahAnalytics Logo"
-                width={24}
-                height={24}
-                className="w-full h-full object-cover"
-                priority
-              />
+            
+
+
+          <span>A</span>
             </div>
-            <span>EraahAnalytics</span>
+            <span>ATSAnalytics</span>
           </div>
 
           <p className="text-sm text-gray-600 dark:text-white">
-            © 2025 EraahAnalytics. All rights reserved.
+            © 2025 ATSAnalytics. All rights reserved.
           </p>
         </div>
       </footer>

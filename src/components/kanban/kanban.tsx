@@ -1,7 +1,7 @@
 // src/components/kanban/kanban.tsx
 "use client";
 
-import { useMemo, useRef, useState, type ChangeEvent } from "react";
+import { useMemo, useState } from "react";
 import { DragDropContext, Droppable, Draggable, type DropResult } from "@hello-pangea/dnd";
 import type { App, KanbanStage } from "@/types/kanban";
 import { X, Trash2 } from "lucide-react";
@@ -30,7 +30,6 @@ type KanbanProps = {
   onMove: (id: string, toStage: KanbanStage) => Promise<void>;
   onAdd: (payload: CreatePayload) => Promise<void>;
   onDelete: (id: string) => Promise<void>;
-
 };
 
 export default function Kanban({ apps, onMove, onAdd, onDelete }: KanbanProps) {
@@ -64,6 +63,8 @@ export default function Kanban({ apps, onMove, onAdd, onDelete }: KanbanProps) {
       STAGES.map((s) => [s, [] as App[]])
     ) as Record<KanbanStage, App[]>;
     for (const a of filteredApps) (base[a.stage] ??= []).push(a);
+    // Optional: keep newest first in each column
+    for (const s of STAGES) base[s]?.sort((x, y) => +new Date(y.createdAt) - +new Date(x.createdAt));
     return base;
   }, [filteredApps]);
 
@@ -73,6 +74,7 @@ export default function Kanban({ apps, onMove, onAdd, onDelete }: KanbanProps) {
     await onMove(draggableId, destination.droppableId as KanbanStage);
   }
 
+  // Add Modal state
   const [showAdd, setShowAdd] = useState(false);
   const [addStage, setAddStage] = useState<KanbanStage>("Applied");
   const [candidateName, setCandidateName] = useState("");
@@ -106,7 +108,7 @@ export default function Kanban({ apps, onMove, onAdd, onDelete }: KanbanProps) {
         company: company.trim() || undefined,
         skills: skillsRaw.split(",").map((s) => s.trim()).filter(Boolean),
         yearsOfExperience: expNum,
-        resumeLink: resumeLink.trim() || undefined,
+        resumeLink: resumeLink.trim() || undefined, // read-only later; stored in DB
         stage: addStage,
       });
       resetForm();
@@ -124,6 +126,7 @@ export default function Kanban({ apps, onMove, onAdd, onDelete }: KanbanProps) {
 
   return (
     <>
+      {/* Filters */}
       <div className="sticky top-[64px] z-10 mb-3 bg-white/80 dark:bg-black/40 backdrop-blur rounded-xl p-2 md:p-0">
         <div className="flex flex-col md:flex-row gap-2 md:items-center">
           <div className="flex gap-2 w-full md:w-auto">
@@ -160,8 +163,10 @@ export default function Kanban({ apps, onMove, onAdd, onDelete }: KanbanProps) {
         </div>
       </div>
 
+      {/* Board */}
       <DragDropContext onDragEnd={onDragEnd}>
         <div className="md:grid md:gap-4 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 -mx-3 px-3">
+          {/* Mobile stack */}
           <div className="md:hidden flex flex-col gap-3 overflow-y-auto no-scrollbar max-h-[calc(100vh-100px)] pb-3 snap-y snap-mandatory">
             {STAGES.map((stage) => {
               const theme = STAGE_STYLE[stage];
@@ -186,7 +191,6 @@ export default function Kanban({ apps, onMove, onAdd, onDelete }: KanbanProps) {
                         themeForStage={theme}
                         onMove={onMove}
                         onDelete={handleDelete}
-                       
                       />
                       {p.placeholder}
                     </div>
@@ -196,6 +200,7 @@ export default function Kanban({ apps, onMove, onAdd, onDelete }: KanbanProps) {
             })}
           </div>
 
+          {/* Desktop grid */}
           <div className="hidden md:contents">
             {STAGES.map((stage) => {
               const theme = STAGE_STYLE[stage];
@@ -220,7 +225,6 @@ export default function Kanban({ apps, onMove, onAdd, onDelete }: KanbanProps) {
                         themeForStage={theme}
                         onMove={onMove}
                         onDelete={handleDelete}
-                       
                       />
                       {p.placeholder}
                     </div>
@@ -232,6 +236,7 @@ export default function Kanban({ apps, onMove, onAdd, onDelete }: KanbanProps) {
         </div>
       </DragDropContext>
 
+      {/* Add Modal */}
       {showAdd && (
         <div
           className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/40"
@@ -287,9 +292,6 @@ export default function Kanban({ apps, onMove, onAdd, onDelete }: KanbanProps) {
                 numeric
               />
               <TextInput label="Resume link" value={resumeLink} onChange={setResumeLink} placeholder="https://..." />
-
-             
-
               <TextInput
                 label="Skills (comma separated)"
                 value={skillsRaw}
@@ -335,9 +337,7 @@ function ColumnHeader({
         <span className={`inline-block h-2.5 w-2.5 rounded-full ${theme.pill}`} />
         <h4 className="text-sm font-semibold">{stage}</h4>
       </div>
-      <span
-        className={`text-xs px-2 py-0.5 rounded-full border border-black/10 dark:border-white/10 ${theme.ring}`}
-      >
+      <span className={`text-xs px-2 py-0.5 rounded-full border border-black/10 dark:border-white/10 ${theme.ring}`}>
         {count}
       </span>
     </div>
@@ -360,28 +360,12 @@ function Cards({
   themeForStage,
   onMove,
   onDelete,
-
 }: {
   items: App[];
   themeForStage: { pill: string };
   onMove: (id: string, to: KanbanStage) => Promise<void>;
   onDelete: (id: string) => Promise<void>;
-  onUpdateResume?: (id: string, url?: string) => Promise<void>;
 }) {
-  // stable ref map for per-card file inputs
-  const inputsRef = useRef<Record<string, HTMLInputElement | null>>({});
-
-  const askResumeLink = (current?: string) => {
-    if (typeof window === "undefined") return undefined;
-    const next = window.prompt("Paste resume URL (leave empty to clear):", current ?? "");
-    if (next === null) return undefined;
-    const clean = next.trim();
-    return clean.length ? clean : "";
-  };
-
- 
-
-
   return (
     <div className="space-y-2.5">
       {items.map((a, idx) => {
@@ -397,17 +381,6 @@ function Cards({
                 {...pp.dragHandleProps}
                 className="rounded-xl border border-black/10 dark:border-white/10 bg-white/80 dark:bg-white/10 p-3 shadow-sm hover:shadow transition"
               >
-                {/* hidden input kept in a stable ref map */}
-                <input
-                  ref={(el) => {
-                    inputsRef.current[a._id] = el;
-                  }}
-                  type="file"
-                  accept="application/pdf"
-                  className="hidden"
-                  
-                />
-
                 <div className="flex items-start justify-between gap-2">
                   <div className="min-w-0">
                     <p className="text-sm font-medium truncate">{a.candidate.name}</p>
@@ -457,10 +430,6 @@ function Cards({
                     + Interview
                   </button>
 
-                  
-
-                  
-
                   <label className="text-[11px] opacity-70">Move:</label>
                   <select
                     value={a.stage}
@@ -501,9 +470,6 @@ function Cards({
     </div>
   );
 }
-
-
-
 
 function TextInput({
   label,
