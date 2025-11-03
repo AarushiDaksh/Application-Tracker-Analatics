@@ -1,4 +1,4 @@
-# EraahAnalytics – Job Application Tracker & Analytics
+# Job Application Tracker & Analytics
 
 A full-stack **ATS (Applicant Tracking System)** for Recruiters with a **Kanban board** and integrated **Analytics Dashboard**.  
 Built to streamline job application management with drag-and-drop stages, real-time updates, and data-driven insights.
