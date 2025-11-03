@@ -83,11 +83,6 @@ cp .env.example .env.local
 # Run dev server
 npm run dev
 ```
-### Deployment
-vercel - https://eraah-assignment.vercel.app/ 
-Database - MongoDb Atlas
-
----
 ##  Libraries Used
 - `next`, `react`, `react-dom`
 - `tailwindcss`
@@ -97,7 +92,3 @@ Database - MongoDb Atlas
 - `redux`, `@reduxjs/toolkit`
 
 ---
-
-## 🔗 Links
-- Demo Video:https://drive.google.com/file/d/1VAxubwXztNBM7RzEGxrR7nWTKDCJZBL7/view?usp=sharing
-- Live Demo:(https://eraah-assignment.vercel.app/ )
