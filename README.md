@@ -7,32 +7,6 @@ Built to streamline job application management with drag-and-drop stages, real-t
 ## fully functional Ui for all screens listed are screenshorts for web and mobile
 <img width="875" height="449" alt="image" src="https://github.com/user-attachments/assets/39eb38d3-f0de-4fec-a2c4-f9409f3644bd" />
 
-<p align="center">
-  <img width="400" alt="image" src="https://github.com/user-attachments/assets/eb4f0f7d-5ef6-4f8d-b5e2-e56041c48df1" />
-  <img width="400" alt="image" src="https://github.com/user-attachments/assets/858ac42e-bf53-4142-b108-208cd1669b4f" />
-</p>
-
-<p align="center">
-  <img width="400" alt="image" src="https://github.com/user-attachments/assets/c4ff3f40-6c75-4897-b2a7-0c526c420a19" />
-  <img width="400" alt="image" src="https://github.com/user-attachments/assets/58c850dc-77c2-46b9-a953-b3ac0b9b99e6" />
-</p>
-
-<p align="center">
-  <img width="400" alt="image" src="https://github.com/user-attachments/assets/ff5d5dca-d148-49b9-a026-d2cbd21b22d7" />
-  <img width="400" alt="image" src="https://github.com/user-attachments/assets/313116c2-47f0-414f-8ee6-1c681847d4a1" />
-</p>
-
-<p align="center">
-  <img width="400" alt="image" src="https://github.com/user-attachments/assets/57c63822-a3eb-4698-86a7-56ff877beb8e" />
-  <img width="400" alt="image" src="https://github.com/user-attachments/assets/531e6cf7-7f97-450a-91d6-e32ca8064a4a" />
-</p>
-
-<p align="center">
-  <img width="400" alt="image" src="https://github.com/user-attachments/assets/2a69810f-4315-4481-bf52-5549caebcad6" />
-  <img width="400" alt="image" src="https://github.com/user-attachments/assets/e14d0a41-d48a-4854-889e-505e728d50f6" />
-  <img width="400" alt="image" src="https://github.com/user-attachments/assets/b3a521bb-acd8-4744-8dec-96bc92303515" />
-</p>
-
 
 ## Features
 - **Database-backed Kanban board** with drag-and-drop (using `react-beautiful-dnd` / `framer-motion`).
